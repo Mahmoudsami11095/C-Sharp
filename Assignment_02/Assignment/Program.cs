@@ -1,25 +1,34 @@
 using System;
 
 #region Q1: Explicit Casting
-// Question: What is the output of casting a double (9.99) to an int?
-// Prediction: It will be 9 because casting a double to an int truncates the decimal part.
+// Q1: What will this print and explain what happens?
+// Solution: It will be 9 because casting a double to an int truncates the decimal part.
 double d = 9.99;
-int i = (int)d;
-Console.WriteLine($"Q1: double {d} cast to int is {i}");
+int x = (int)d;
+Console.WriteLine(x);
 #endregion
 
 #region Q2: Numeric Precision
-// Question: Fix a code snippet where 5 / 2 results in 2 instead of 2.5.
-// Solution: Cast one of the operands to a double or use a double literal.
-double result = 5 / 2.0;
-Console.WriteLine($"Q2: 5 / 2.0 = {result}");
+// Q2: This code doesn’t compile. Fix it with the smallest change? 
+/*
+int n = 5;
+double d2 = n / 2; 
+Console.WriteLine(d2); 
+*/
+// Solution: It was compiled but the result is incorrect
+// because we divide an int by an int, which results in an int.
+// To fix this, we need to Cast one of the operands to a double
+// or use a double literal.
+int n = 5;
+double d2 = (double)n / 2;
+Console.WriteLine(d2);
 #endregion
 
 #region Q3: User Input
-// Question: Read an age from the console and store it as an int.
-Console.Write("Q3: Enter your age: ");
-string inputAge = Console.ReadLine();
-if (int.TryParse(inputAge, out int age))
+// Question: You read a number from user input .. Write the correct line to get age as int.
+Console.WriteLine("Q3: Enter your age");
+string ageAsString = Console.ReadLine();
+if (int.TryParse(ageAsString, out int age))
 {
     Console.WriteLine($"Your age is: {age}");
 }
@@ -30,11 +39,17 @@ else
 #endregion
 
 #region Q4: Parsing Exceptions
-// Question: What happens when int.Parse() is called on a non-numeric string like "12a"?
-// Answer: It throws a System.FormatException.
+// Question: Q4: What happens here and why?   
+/*
+string s = "12a"; 
+int x = int.Parse(s); 
+Console.WriteLine(x); 
+*/
+// Answer: It will throw a FormatException because the string "12a" 
+// cannot be parsed as an integer. and application will be terminated
+Console.WriteLine("Q4: Attempting to parse '12a'...");
 try
 {
-    Console.WriteLine("Q4: Attempting to parse '12a'...");
     int.Parse("12a");
 }
 catch (FormatException ex)
@@ -44,7 +59,8 @@ catch (FormatException ex)
 #endregion
 
 #region Q5: Safe Conversion
-// Question: Modify Q4 to print "Invalid" instead of throwing an exception.
+// Complete the code from the previous question so it prints 
+// Invalid if conversion into int  fails, otherwise prints the number
 Console.Write("Q5: Enter a number: ");
 string inputNum = Console.ReadLine();
 if (int.TryParse(inputNum, out int num))
@@ -58,22 +74,33 @@ else
 #endregion
 
 #region Q6: Unboxing (Int)
-// Question: Explain the process and output of unboxing an object containing an int back to an int.
-// Explanation: Unboxing is the explicit conversion from object to a value type. 
-// It requires the object to actually contain the value type being unboxed.
-object obj = 10; // Boxing
-int unboxedInt = (int)obj; // Unboxing
-Console.WriteLine($"Q6: Unboxed int: {unboxedInt}");
+// What will this print and explain why ? 
+/*
+object o = 10; 
+int a = (int)o; 
+Console.WriteLine(a + 1); 
+*/
+// Answer: It will print 11 because it first unboxes the integer 10 
+// and then adds 1 to it.
+Console.WriteLine("Q6: Unboxing an int object to an int...");
+object o = 10; 
+int a = (int)o; 
+Console.WriteLine($"a + 1 = {a + 1}"); 
 #endregion
 
 #region Q7: Unboxing (Long)
-// Question: Predict behavior when trying to unbox an int stored in an object directly into a long.
-// Prediction: It throws an InvalidCastException because unboxing must be to the exact type.
+// What will this print and explain why and if there is a problem handle it ? 
+Console.WriteLine("Q7: Unboxing an int object to a long...");
+
+/*object o2 = 10; 
+long x2 = (long)o2; 
+Console.WriteLine(x2); */
+// Answer: It will throw an InvalidCastException because unboxing must be to the exact type.
 object objInt = 10;
 try
 {
-    Console.WriteLine("Q7: Attempting to unbox int object to long...");
     long unboxedLong = (long)objInt;
+    Console.WriteLine(unboxedLong);
 }
 catch (InvalidCastException ex)
 {
@@ -82,20 +109,60 @@ catch (InvalidCastException ex)
 #endregion
 
 #region Q8: Exception Handling
-// Question: Fix the unboxing error from Q7 to avoid exceptions and return -1 if impossible.
-object objInt2 = 10;
-long safeLong = objInt2 is int ? (int)objInt2 : -1;
-// Alternatively, if it could be anything:
-// long safeLong = objInt2 is long l ? l : (objInt2 is int i2 ? i2 : -1);
-Console.WriteLine($"Q8: Safe unboxed value: {safeLong}");
+// Question: Fix this to avoid exceptions and print -1 if conversion isn’t possible? 
+Console.WriteLine("Q8: Unboxing an int object to a long...");
+
+/*object o3 = 10; 
+long x3 = o3; // compile Error"  Cannot implicitly convert type 'object' to 'long'. An explicit conversion exists (are you missing a cast?)
+Console.WriteLine(x3);*/
+
+//first Solution 
+object o4 = 10;
+long x4;
+
+try
+{
+    x4 = (long)o4;
+}
+catch
+{
+    x4 = -1;
+}
+
+Console.WriteLine("Try Catch Solution: " + x4);
+
+//another Solution
+object o5 = 10;
+long x5;
+
+try
+{
+    x5 = Convert.ToInt64(o5);
+}
+catch
+{
+    x5 = -1;
+}
+
+Console.WriteLine("Try Catch Solution: " + x5);
+
+// Another Solution
+object o2 = 10;
+long x2 = o2 is IConvertible ? Convert.ToInt64(o2) : -1;
+Console.WriteLine("Check If IConvertible Solution: " + x2);
+
 #endregion
 
 #region Q9: Null-Conditional Operator
-// Question: What is the output of name?.Length when name is null?
+// Question: What will this print and explain why ? 
+/*string? name = null; 
+Console.WriteLine(name?.Length); */
+
 // Answer: It returns null (of type int?).
-string name = null;
-int? length = name?.Length;
-Console.WriteLine($"Q9: name?.Length when name is null is: {(length == null ? "null" : length.ToString())}");
+string? name = null; 
+Console.WriteLine("Q9: " + name?.Length); 
+Console.WriteLine("This is value if name is null");
+
 #endregion
 
 #region Q10: Null-Coalescing Operator
@@ -104,7 +171,7 @@ Console.WriteLine($"Q9: name?.Length when name is null is: {(length == null ? "n
 int finalLength = name?.Length ?? 0;
 Console.WriteLine($"Q10: name?.Length ?? 0 when name is null is: {finalLength}");
 #endregion
-
+//////////////////////////////////////////////
 #region Q11: Null Safety
 // Question: Identify flaw in int.Parse(s ?? "0") for a null string.
 // Flaw: If s is null, it parses "0" correctly. But if s is an empty string or non-numeric, it still fails.

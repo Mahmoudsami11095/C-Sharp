@@ -166,41 +166,108 @@ Console.WriteLine("This is value if name is null");
 #endregion
 
 #region Q10: Null-Coalescing Operator
-// Question: Explain result of name?.Length ?? 0 when name is null.
+// Question: What will this print and explain the process?
+//string? name2 = null;
+//int length = name2?.Length ?? 0
 // Answer: It returns 0 because ?? provides a default value if the left side is null.
-int finalLength = name?.Length ?? 0;
-Console.WriteLine($"Q10: name?.Length ?? 0 when name is null is: {finalLength}");
+string? name2 = null;
+int length = name2?.Length ?? 0;
+Console.WriteLine($"Q10: name?.Length ?? 0 when name is null is: {length}");
 #endregion
 //////////////////////////////////////////////
 #region Q11: Null Safety
-// Question: Identify flaw in int.Parse(s ?? "0") for a null string.
-// Flaw: If s is null, it parses "0" correctly. But if s is an empty string or non-numeric, it still fails.
+// Question: What’s wrong with this “safe” code and how can we solve it ?
+
+//string? s = null;
+//int x = int.Parse(s ?? "0");
+//Console.WriteLine(x);
+
+// Answer: Identify flaw in int.Parse(s ?? "0") for a null string.
+// Flaw: If s is null, it parses "0" correctly. But if s is an empty string or non-numeric,
+// it still fails.
 // Better approach: int.TryParse.
-string s = null;
+string? s = null;
 int val = int.Parse(s ?? "0");
 Console.WriteLine($"Q11: Result for null string using ?? '0': {val}");
+
+// TryParse is the truly "safe" way
+if (int.TryParse(s, out int result))
+{
+    Console.WriteLine(result);
+}
+else
+{
+    // Handle the failure gracefully (e.g., use a default)
+    int x = 0; 
+    Console.WriteLine($"Invalid input, defaulting to {x}");
+}
 #endregion
 
 #region Q12: String Handling
-// Question: General practice on handling potential null values in string variables.
+// Question: What happens here and if there is a problem, handle it
+//string? s = null;
+//Console.WriteLine(s!.Length);
+
+
+// Answer: General practice on handling potential null values in string variables.
+// The Problem: Using '!' (Null-forgiving operator) on a null value
+
+string? s = null;
+// This would crash at runtime:
+// Console.WriteLine(s!.Length); 
+
+// The solution 1: Null-Conditional Operator (Safest)
+// This returns null instead of crashing if s is null.
+Console.WriteLine(s?.Length); 
+
+// The Solution 2: Use the null-conditional operator
+Console.WriteLine($"Q12: Safe length access: {s?.Length ?? 0}");
+
+// The Solution 3: Traditional Null Check  
 // Best practice: Use IsNullOrEmpty or IsNullOrWhiteSpace.
-string str = null;
-if (string.IsNullOrEmpty(str))
+
+if (s != null) 
+{
+    Console.WriteLine(s.Length);
+}
+
+if (string.IsNullOrEmpty(s))
 {
     Console.WriteLine("Q12: String is null or empty.");
 }
 #endregion
 
 #region Q13: Conversion Methods
-// Question: Explain output of Convert.ToInt32(null).
-// Answer: It returns 0. int.Parse(null) would throw ArgumentNullException.
-int convertedNull = Convert.ToInt32(null);
-Console.WriteLine($"Q13: Convert.ToInt32(null) is: {convertedNull}");
+// Question: What will this print?
+string? s = null;
+int x = Convert.ToInt32(s); Console.WriteLine(x);
+
+// Answer: It returns 0. 
+// Convert.ToInt32(s) is called. This method is specifically designed to handle null inputs gracefully.
+//int.Parse(null) would throw ArgumentNullException.
+// Convert.ToInt32(s) will still throw a FormatException if the string contains non-numeric text (like "abc").
+Console.WriteLine($"Q13: Convert.ToInt32(null) is: {x}");
 #endregion
 
 #region Q14: Parsing vs. Converting
 // Question: Compare int.Parse(s) and Convert.ToInt32(s).
-// int.Parse(s): Throws if s is null. Throws if s is invalid format.
+// Compare results and explain each result :
+
+//string? s = null;
+// A
+// int a = int.Parse(s);
+// B
+//int b = Convert.ToInt32(s);
+//Console.WriteLine(b);
+
+// Feature	                   // int.Parse(s)	                    // Convert.ToInt32(s)
+// ----------------------------------------------------------------------------------------------
+// Input is null	           // Throws ArgumentNullException	    // Returns 0
+// Input is "" (Empty)	       // Throws FormatException	        // Throws FormatException
+// Input is "12.5"	           // Throws FormatException	        // Throws FormatException
+// Input is "10"	           // Returns 10	                    // Returns 10
+
+// Answer: int.Parse(s): Throws if s is null. Throws if s is invalid format.
 // Convert.ToInt32(s): Returns 0 if s is null. Throws if s is invalid format.
 Console.WriteLine("Q14: int.Parse throws on null, Convert.ToInt32 returns 0 on null.");
 #endregion

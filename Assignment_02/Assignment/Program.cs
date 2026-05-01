@@ -198,8 +198,8 @@ if (int.TryParse(s, out int result))
 else
 {
     // Handle the failure gracefully (e.g., use a default)
-    int x = 0; 
-    Console.WriteLine($"Invalid input, defaulting to {x}");
+    int x1 = 0; 
+    Console.WriteLine($"Invalid input, defaulting to {x1}");
 }
 #endregion
 
@@ -212,26 +212,26 @@ else
 // Answer: General practice on handling potential null values in string variables.
 // The Problem: Using '!' (Null-forgiving operator) on a null value
 
-string? s = null;
+string? s_ = null;
 // This would crash at runtime:
 // Console.WriteLine(s!.Length); 
 
 // The solution 1: Null-Conditional Operator (Safest)
 // This returns null instead of crashing if s is null.
-Console.WriteLine(s?.Length); 
+Console.WriteLine(s_?.Length); 
 
 // The Solution 2: Use the null-conditional operator
-Console.WriteLine($"Q12: Safe length access: {s?.Length ?? 0}");
+Console.WriteLine($"Q12: Safe length access: {s_?.Length ?? 0}");
 
 // The Solution 3: Traditional Null Check  
 // Best practice: Use IsNullOrEmpty or IsNullOrWhiteSpace.
 
-if (s != null) 
+if (s_ != null) 
 {
-    Console.WriteLine(s.Length);
+    Console.WriteLine(s_.Length);
 }
 
-if (string.IsNullOrEmpty(s))
+if (string.IsNullOrEmpty(s_))
 {
     Console.WriteLine("Q12: String is null or empty.");
 }
@@ -239,14 +239,14 @@ if (string.IsNullOrEmpty(s))
 
 #region Q13: Conversion Methods
 // Question: What will this print?
-string? s = null;
-int x = Convert.ToInt32(s); Console.WriteLine(x);
+string? s13 = null;
+int x13 = Convert.ToInt32(s13); Console.WriteLine(x13);
 
 // Answer: It returns 0. 
 // Convert.ToInt32(s) is called. This method is specifically designed to handle null inputs gracefully.
 //int.Parse(null) would throw ArgumentNullException.
 // Convert.ToInt32(s) will still throw a FormatException if the string contains non-numeric text (like "abc").
-Console.WriteLine($"Q13: Convert.ToInt32(null) is: {x}");
+Console.WriteLine($"Q13: Convert.ToInt32(null) is: {x13}");
 #endregion
 
 #region Q14: Parsing vs. Converting

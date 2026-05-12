@@ -16,6 +16,7 @@ This repository uses a branch-per-assignment strategy:
 - `main`: Contains the repository documentation and base files.
 - `assignment-1`: Contains the code for Assignment 1.
 - `assignment-2`: Contains the files for Assignment 2.
+- `assignment-3`: Contains the files for Assignment 3.
 
 ## 🛠 Getting Started
 
@@ -38,8 +39,8 @@ This repository uses a branch-per-assignment strategy:
 ## 📚 Progress Tracking
 
 - [x] Assignment 1: C# Fundamentals - 20 Questions
-- [ ] Assignment 2: In Progress
-- [ ] Assignment 3: TBD
+- [x] Assignment 2: Memory Management & Null Safety
+- [x] Assignment 3: Control Flow & StringBuilder
 
 ## 🎓 Learning Resources
 

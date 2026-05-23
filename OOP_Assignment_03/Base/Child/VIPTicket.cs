@@ -1,12 +1,9 @@
-﻿namespace OOP_Assignment_03.Base.Child
+namespace OOP_Assignment_03.Base.Child
 {
-    internal class VIPTicket : TicketClass
+    internal class VIPTicket : Ticket
     {
-        /*  b.VIPTicket — adds LoungeAccess(bool) and ServiceFee(decimal)= 50. 
-            Each child class should override ToString() to include its own extra info.
-         */
-        public bool LoungeAccess;
-        public decimal ServiceFee = 50;
+        public bool LoungeAccess { get; set; }
+        public decimal ServiceFee { get; set; } = 50m;
 
         public VIPTicket(string movieName, decimal price, bool loungeAccess) : base(movieName, price)
         {
@@ -15,7 +12,7 @@
 
         public override string ToString()
         {
-            return base.ToString() + $", Lounge Access: {(LoungeAccess ? "Yes" : "No")}, Service Fee: {ServiceFee:C}";
+            return base.ToString() + $" | Lounge: {(LoungeAccess ? "Yes" : "No")} | Service Fee: {ServiceFee} EGP";
         }
     }
 }

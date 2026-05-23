@@ -1,28 +1,23 @@
-﻿using OOP_Assignment_03.Base;
+using System;
+using OOP_Assignment_03.Base;
 
 namespace OOP_Assignment_03
 {
-    /*
-     3. Create a Cinema class that has a CinemaName, a Projector object (created inside Cinema), and holds up to 20 tickets. Add: 
-        a. AddTicket(Ticket t) — adds a ticket to the first available slot. 
-        b. PrintAllTickets() — prints all tickets. 
-        c. OpenCinema() and CloseCinema() — start/stop the projector. 
-     */
-    internal class CinemaClass
+    internal class Cinema
     {
         public string CinemaName { get; set; }
-        private ProjectorClass _projector; // Composition
+        private Projector _projector; // Composition
         private int _ticketCount;
-        public TicketClass[] _tickets = new TicketClass[20];
+        private Ticket[] _tickets = new Ticket[20];
 
-        public CinemaClass(string cinemaName)
+        public Cinema(string cinemaName)
         {
             CinemaName = cinemaName;
-            _projector = new ProjectorClass();
+            _projector = new Projector();
             _ticketCount = 0;
         }
 
-        public bool AddTicket(TicketClass t)
+        public bool AddTicket(Ticket t)
         {
             for (int i = 0; i < _tickets.Length; i++)
             {
@@ -34,30 +29,32 @@ namespace OOP_Assignment_03
                 }
             }
             Console.WriteLine("Cinema is at full capacity (20 tickets).");
-            return false; // No available slot
+            return false;
         }
 
         public void PrintAllTickets()
         {
             Console.WriteLine("========== All Tickets ==========");
-            foreach (TicketClass ticket in _tickets)
+            foreach (Ticket ticket in _tickets)
             {
                 if (ticket != null)
                 {
                     Console.WriteLine(ticket.ToString());
                 }
             }
+            Console.WriteLine(); // Blank line for spacing
         }
 
         public void OpenCinema()
         {
             Console.WriteLine("========== Cinema Opened ==========");
             _projector.Start();
+            Console.WriteLine(); // Blank line for spacing
         }
 
         public void CloseCinema()
         {
-            Console.WriteLine("\n========== Cinema Closed ==========");
+            Console.WriteLine("========== Cinema Closed ==========");
             _projector.Stop();
         }
     }

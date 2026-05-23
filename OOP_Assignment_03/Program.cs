@@ -1,4 +1,6 @@
-﻿using OOP_Assignment_03.Base;
+using System;
+using OOP_Assignment_03.Base;
+using OOP_Assignment_03.Base.Child;
 
 namespace OOP_Assignment_03
 {
@@ -13,7 +15,6 @@ namespace OOP_Assignment_03
          */
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
             #region Part 01 : Theoretical Questions Q1
             /*
                 Q1 : Identify the type of relationship in each scenario below (Inheritance, Association, Aggregation, Composition, or Dependency): 
@@ -46,15 +47,35 @@ namespace OOP_Assignment_03
             */
             #endregion
             #region Part 02 : Practical (Extending the Movie Ticket Booking System) 
-            // a.Create a Cinema and open it. 
-            CinemaClass cinema = new("Default Cinema Name");
+            // a. Create a Cinema and open it. 
+            Cinema cinema = new Cinema("Cineplex");
             cinema.OpenCinema();
+
             // b. Create one of each ticket type (hardcoded data) and add them to the Cinema. 
-            TicketClass ticket = new("Zoz", 500);
-            cinema.AddTicket(ticket);
+            StandardTicket ticket1 = new StandardTicket("Inception", 120m, "A-5");
+            VIPTicket ticket2 = new VIPTicket("Avengers", 200m, true);
+            IMAXTicket ticket3 = new IMAXTicket("Dune", 180m, false);
+
+            cinema.AddTicket(ticket1);
+            cinema.AddTicket(ticket2);
+            cinema.AddTicket(ticket3);
+
             // c. Print all tickets.
             cinema.PrintAllTickets();
-            // d.Close the Cinema.
+
+            // Print Statistics
+            Console.WriteLine("========== Statistics ==========");
+            Console.WriteLine($"Total Tickets Created: {Ticket.GetTotalTickets()}");
+            Console.WriteLine($"Booking Ref 1: {BookingHelper.GenerateBookingReference()}");
+            Console.WriteLine($"Booking Ref 2: {BookingHelper.GenerateBookingReference()}");
+            
+            decimal ticketPrice = 100m;
+            int groupSize = 5;
+            decimal discountedTotal = BookingHelper.CalcGroupDiscount(groupSize, ticketPrice);
+            Console.WriteLine($"Group Discount ({groupSize} x {ticketPrice:0} EGP): {discountedTotal:0} EGP (10% off)");
+            Console.WriteLine(); // Spacing
+
+            // d. Close the Cinema.
             cinema.CloseCinema();
             #endregion
         }

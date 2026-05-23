@@ -1,21 +1,23 @@
-﻿namespace OOP_Assignment_03.Base.Child
+namespace OOP_Assignment_03.Base.Child
 {
-    internal class IMAXTicket : TicketClass
+    internal class IMAXTicket : Ticket
     {
-        /*
-            c. IMAXTicket — adds Is3D (bool). If true, the price increases by 30 EGP. 
-            Each child class should override ToString() to include its own extra info.
-        */
         public bool Is3D { get; set; }
 
-        public IMAXTicket(string movie, int price, bool is3D) : base(movie, price + (is3D ? 30 : 0))
+        public override decimal Price
+        {
+            get => base.Price + (Is3D ? 30m : 0m);
+            set => base.Price = value;
+        }
+
+        public IMAXTicket(string movieName, decimal price, bool is3D) : base(movieName, price)
         {
             Is3D = is3D;
         }
 
         public override string ToString()
         {
-            return $"{base.ToString()} | 3D: {(Is3D ? "Yes" : "No")} | IMAX";
+            return base.ToString() + $" | IMAX 3D: {(Is3D ? "Yes" : "No")}";
         }
     }
 }

@@ -1,10 +1,47 @@
-﻿namespace OOP_Assignment_05
+using OOP_Assignment_05.Child;
+using System;
+
+namespace OOP_Assignment_05
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Cinema cinema = new Cinema("City Center");
+            cinema.OpenCinema();
+
+            StandardTicket t1 = new StandardTicket("Inception", 80m, "A5");
+            VIPTicket t2 = new VIPTicket("Avengers", 150m, true);
+            IMAXTicket t3 = new IMAXTicket("Dune", 100m, true);
+
+            t1.Book();
+            t2.Book();
+            t3.Book();
+
+            cinema.AddTicket(t1);
+            cinema.AddTicket(t2);
+            cinema.AddTicket(t3);
+
+            cinema.PrintAllTickets();
+
+            Console.WriteLine("--- Clone Test ---");
+            VIPTicket clonedTicket = (VIPTicket)t2.Clone();
+            clonedTicket.MovieName = "Interstellar";
+            Console.WriteLine($"Original : {t2}");
+            Console.WriteLine($"Clone : {clonedTicket}");
+            Console.WriteLine();
+
+            t1.Cancel();
+            Console.WriteLine("--- After Cancellation ---");
+            t1.Print();
+            Console.WriteLine();
+
+            Console.WriteLine("--- BookingHelper.PrintAll ---");
+            IPrintable[] printables = new IPrintable[] { t1, t2, t3 };
+            BookingHelper.PrintAll(printables);
+            Console.WriteLine();
+
+            cinema.CloseCinema();
             #region Part 01: Theoretical Questions Q1  
             /*
              * Q1: What is an interface in C#?    

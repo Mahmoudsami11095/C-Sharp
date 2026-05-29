@@ -31,12 +31,12 @@ namespace OOP_Assignment_05
 
         public void PrintAllTickets()
         {
-            Console.WriteLine("========== All Tickets ==========");
+            Console.WriteLine("--- All Tickets ---");
             foreach (Ticket ticket in _tickets)
             {
                 if (ticket != null)
                 {
-                    ticket.PrintTicket();
+                    ticket.Print();
                 }
             }
             Console.WriteLine(); // Blank line for spacing
@@ -45,20 +45,20 @@ namespace OOP_Assignment_05
         {
             if (ticket != null)
             {
-                ticket.PrintTicket();
+                ticket.Print();
             }
         }
 
         public void OpenCinema()
         {
-            Console.WriteLine("========== Cinema Opened ==========");
+            Console.WriteLine("=== Cinema Opened ===");
             _projector.Start();
             Console.WriteLine(); // Blank line for spacing
         }
 
         public void CloseCinema()
         {
-            Console.WriteLine("========== Cinema Closed ==========");
+            Console.WriteLine("=== Cinema Closed ===");
             _projector.Stop();
         }
     }

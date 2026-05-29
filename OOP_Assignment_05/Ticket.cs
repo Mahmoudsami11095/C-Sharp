@@ -5,7 +5,7 @@ namespace OOP_Assignment_05
         private static int _totalTickets = 0;
         private decimal _price;
 
-        public int TicketId { get; }
+        public int TicketId { get; private set; }
         public string MovieName { get; set; }
 
         public virtual decimal Price
@@ -26,7 +26,7 @@ namespace OOP_Assignment_05
 
         public decimal PriceAfterTax => Price * 1.14m;
 
-        public bool IsBoooked { get; private set; }
+        public bool IsBooked { get; private set; }
 
         public Ticket(string movieName, decimal price)
         {
@@ -37,14 +37,14 @@ namespace OOP_Assignment_05
 
         public override string ToString()
         {
-            return $"Ticket #{TicketId} | {MovieName} | Price: {Price:0} EGP | After Tax: {PriceAfterTax:0.00} EGP";
+            return $"[Ticket #{TicketId}] {MovieName} | Price: {Price:0} | After Tax: {PriceAfterTax:0.#} | Booked: {(IsBooked ? "Yes" : "No")}";
         }
 
         public static int GetTotalTickets() => _totalTickets;
 
         public virtual void PrintTicket()
         {
-            Console.WriteLine(ToString());
+            Print();
         }
 
         public void SetPrice(decimal price)
@@ -64,33 +64,34 @@ namespace OOP_Assignment_05
 
         public void Book()
         {
-            if (!IsBoooked)
+            if (!IsBooked)
             {
-                IsBoooked = true;
-                Console.WriteLine($"Ticket #{TicketId} has been booked.");
+                IsBooked = true;
             }
             else
             {
-                Console.WriteLine($"Ticket #{TicketId} is already booked.");
+                throw new InvalidOperationException($"Ticket #{TicketId} is already booked.");
             }
         }
 
         public void Cancel()
         {
-            if (IsBoooked)
+            if (IsBooked)
             {
-                IsBoooked = false;
-                Console.WriteLine($"Ticket #{TicketId} booking has been canceled.");
+                IsBooked = false;
             }
             else
             {
-                Console.WriteLine($"Ticket #{TicketId} is not booked, so it cannot be canceled.");
+                throw new InvalidOperationException($"Ticket #{TicketId} is not booked, so it cannot be canceled.");
             }
         }
 
-        public object Clone()
+        public virtual object Clone()
         {
-            return new Ticket(this.MovieName, this.Price);
+            Ticket clone = (Ticket)this.MemberwiseClone();
+            clone.TicketId = ++_totalTickets;
+            clone.IsBooked = false;
+            return clone;
         }
     }
 }

@@ -20,5 +20,16 @@ namespace OOP_Assignment_05
         {
             return $"BK-{_bookingCounter++}";
         }
+
+        public static void PrintAll(IPrintable[] printables)
+        {
+            foreach (IPrintable printable in printables)
+            {
+                if (printable != null)
+                {
+                    printable.Print();
+                }
+            }
+        }
     }
 }

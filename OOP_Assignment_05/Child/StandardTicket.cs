@@ -9,10 +9,9 @@ namespace OOP_Assignment_05.Child
             SeatNumber = seatNumber;
         }
 
-        public override void PrintTicket()
+        public override string ToString()
         {
-            Console.WriteLine(base.ToString());
-            Console.WriteLine($"  Seat: {SeatNumber}");
+            return $"[Ticket #{TicketId}] {MovieName} | Standard | Seat: {SeatNumber} | Price: {Price:0} | After Tax: {PriceAfterTax:0.#} | Booked: {(IsBooked ? "Yes" : "No")}";
         }
     }
 }

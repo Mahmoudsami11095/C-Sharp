@@ -15,10 +15,9 @@ namespace OOP_Assignment_05.Child
             Is3D = is3D;
         }
 
-        public override void PrintTicket()
+        public override string ToString()
         {
-            Console.WriteLine(base.ToString());
-            Console.WriteLine($"  IMAX 3D: {(Is3D ? "Yes" : "No")}");
+            return $"[Ticket #{TicketId}] {MovieName} | IMAX | 3D: {(Is3D ? "Yes" : "No")} | Price: {Price:0} | After Tax: {PriceAfterTax:0.#} | Booked: {(IsBooked ? "Yes" : "No")}";
         }
     }
 }

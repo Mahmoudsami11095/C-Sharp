@@ -1,8 +1,8 @@
-﻿namespace OOP_Assignment_05
+namespace OOP_Assignment_05
 {
     internal interface IBookable
     {
-        bool IsBoooked { get; }
+        bool IsBooked { get; }
         void Book();
         void Cancel();
     }

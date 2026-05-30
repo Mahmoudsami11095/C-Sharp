@@ -19,5 +19,10 @@ namespace OOP_Assignment_05.Child
         {
             return $"[Ticket #{TicketId}] {MovieName} | IMAX | 3D: {(Is3D ? "Yes" : "No")} | Price: {Price:0} | After Tax: {PriceAfterTax:0.#} | Booked: {(IsBooked ? "Yes" : "No")}";
         }
+
+        public override object Clone()
+        {
+            return new IMAXTicket(this.MovieName, base.Price, this.Is3D);
+        }
     }
 }

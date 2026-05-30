@@ -20,5 +20,13 @@ namespace OOP_Assignment_05.Child
         {
             return $"[Ticket #{TicketId}] {MovieName} | VIP | Lounge: {(LoungeAccess ? "Yes" : "No")} | Fee: {ServiceFee:0} | Price: {Price:0} | After Tax: {PriceAfterTax:0.#} | Booked: {(IsBooked ? "Yes" : "No")}";
         }
+
+        public override object Clone()
+        {
+            return new VIPTicket(this.MovieName, base.Price, this.LoungeAccess)
+            {
+                ServiceFee = this.ServiceFee
+            };
+        }
     }
 }

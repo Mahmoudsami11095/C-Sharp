@@ -13,5 +13,10 @@ namespace OOP_Assignment_05.Child
         {
             return $"[Ticket #{TicketId}] {MovieName} | Standard | Seat: {SeatNumber} | Price: {Price:0} | After Tax: {PriceAfterTax:0.#} | Booked: {(IsBooked ? "Yes" : "No")}";
         }
+
+        public override object Clone()
+        {
+            return new StandardTicket(this.MovieName, this.Price, this.SeatNumber);
+        }
     }
 }

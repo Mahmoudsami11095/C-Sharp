@@ -1,6 +1,6 @@
 namespace OOP_Assignment_05
 {
-    internal class Ticket : IPrintable, IBookable, ICloneable
+    internal abstract class Ticket : IPrintable, IBookable, ICloneable
     {
         private static int _totalTickets = 0;
         private decimal _price;
@@ -86,12 +86,6 @@ namespace OOP_Assignment_05
             }
         }
 
-        public virtual object Clone()
-        {
-            Ticket clone = (Ticket)this.MemberwiseClone();
-            clone.TicketId = ++_totalTickets;
-            clone.IsBooked = false;
-            return clone;
-        }
+        public abstract object Clone();
     }
 }
